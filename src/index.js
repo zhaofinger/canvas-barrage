@@ -12,7 +12,6 @@ class Barrage {
 		this.height = canvasDom.height
 		this.msgs = new Array(msgStackLength)
 		this.msgStackLength = msgStackLength
-		this.colorArr = colorArr
 		this.intervalId = ''
 		this.quality = quality
 	}
