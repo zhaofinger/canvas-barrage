@@ -45,7 +45,7 @@ class Barrage {
 			this.ctx.save()
 			this.msgs.map(item => {
 				if (item) {
-					if (!item.left) {
+					if (!item.left && typeof item.left !== 'number') {
 						// 弹幕起始位置
 						item.left = this.width
 						// 弹幕距离top位置（除去字体高度随机）
@@ -55,12 +55,16 @@ class Barrage {
 						// 弹幕颜色
 						item.color = this._getRandomColor()
 					} else {
-						if (item.left < 0) {
+						if (item.left < 0 - item.width) {
+							// 清除弹幕
 							item = null
 						} else {
+							// 弹幕运行
 							item.left = parseInt(item.left - item.speed)
 							this.ctx.fillStyle = item.color
-							this.ctx.fillText(item.text, item.left, item.top)
+							let text = this.ctx.fillText(item.text, item.left, item.top)
+							// 文本长度
+							item.width = text.width
 							this.ctx.restore
 						}
 					}
