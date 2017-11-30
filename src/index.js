@@ -5,7 +5,7 @@ class Barrage {
 	 * @param {array} colorArr 弹幕随机色彩
 	 * @param {number} quality 流畅度，通过绘制的频率来控制流畅度
 	 */
-	constructor(canvasDom, msgStackLength = 100, colorArr = ['Yellow', 'Orange', 'Pink', 'Red', 'Blue'], quality = 20) {
+	constructor(canvasDom, msgStackLength = 100, quality = 20) {
 		this.ctx = canvasDom.getContext('2d')
 		this.ctx.font = '30px 微软雅黑'
 		this.width = canvasDom.width
@@ -17,6 +17,27 @@ class Barrage {
 		this.quality = quality
 	}
 
+	/**
+	 * 获取范围内随机数 包括min 不包括max
+	 * @param {number} min 下限
+	 * @param {number} max 上限
+	 */
+	_getLimitRandom(min, max) {
+		return Math.floor(Math.random() * (max - min) + min)
+	}
+
+	/**
+	 * 获取随机色
+	 */
+	_getRandomColor() {
+		const baseColor = ['00','33','66','99','cc','ff']
+		let len = baseColor.length
+		return `#${baseColor[this._getLimitRandom(0, len)]}${baseColor[this._getLimitRandom(0, len)]}${baseColor[this._getLimitRandom(0, len)]}`
+	}
+
+	/**
+	 * 绘制
+	 */
 	_draw() {
 		if (this.intervalId) return
 		/* 定时器绘制弹幕 */
@@ -29,11 +50,11 @@ class Barrage {
 						// 弹幕起始位置
 						item.left = this.width
 						// 弹幕距离top位置（除去字体高度随机）
-						item.top = 30 + parseInt(Math.random() * (this.height - 60))
+						item.top = this._getLimitRandom(30, this.height - 30)
 						// 弹幕移动速度
-						item.speed = parseInt(Math.random() * (6 - 4) + 2)
+						item.speed = this._getLimitRandom(2, 4)
 						// 弹幕颜色
-						item.color = this.colorArr[Math.floor(Math.random() * this.colorArr.length)]
+						item.color = this._getRandomColor()
 					} else {
 						if (item.left < 0) {
 							item = null
