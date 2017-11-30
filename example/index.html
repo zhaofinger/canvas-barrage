@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>弹幕发射系统</title>
+	<style>
+		html {
+			background: #f7f7f7;
+		}
+		body {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		canvas {
+			background: #ffffff;
+			margin-top: 40px;
+		}
+		.input-wrapper {
+			margin-top: 40px;
+		}
+		.barrage-input {
+			width: 200px;
+			padding: 12px;
+		}
+		.send-btn {
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+	<canvas width='700' height='400'></canvas>
+	<div class='input-wrapper'>
+		<input type='text' placeholder='请输入弹幕内容' class='barrage-input'>
+		<button class='send-btn'>发射</button>
+	</div>
+
+	<script src="../src/index.js"></script>
+	<script>
+		let canvasEle = document.querySelector('canvas')
+		let barrage = new Barrage(canvasEle)
+		let sendBtnEle = document.querySelector('.send-btn')
+		let inputEle = document.querySelector('.barrage-input')
+		sendBtnEle.onclick = function() {
+			barrage.pushMessage({text: inputEle.value})
+			inputEle.value = ''
+		}
+	</script>
+</body>
+</html>

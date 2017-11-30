@@ -1,0 +1,23 @@
+{
+  "name": "canvas-barrage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhaofinger/canvas-barrage.git"
+  },
+  "keywords": [
+    "barrage",
+    "canvas"
+  ],
+  "author": "zhaofinger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhaofinger/canvas-barrage/issues"
+  },
+  "homepage": "https://github.com/zhaofinger/canvas-barrage#readme"
+}
