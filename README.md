@@ -2,6 +2,8 @@
 
 基于canvas的弹幕发射器
 
+[![Build Status](https://travis-ci.org/zhaofinger/canvas-barrage.svg?branch=master)](https://travis-ci.org/zhaofinger/canvas-barrage)
+
 ## Usage
 
 ```html
