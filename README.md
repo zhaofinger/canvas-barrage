@@ -39,15 +39,15 @@
         yarn add canvas-barrage // or npm install canvas-barrage
         ````
     1. use
-    ```html
-    <canvas width='700' height='400'></canvas>
-    <script>
-        import Barrage from 'canvas-barrage'
-        let canvasEle = document.querySelector('canvas')
-        let barrage = new Barrage(canvasEle)
-        barrage.pushMessage({text: '弹幕发射，biu'})
-    </script>
-    ```
+        ```html
+        <canvas width='700' height='400'></canvas>
+        <script>
+            import Barrage from 'canvas-barrage'
+            let canvasEle = document.querySelector('canvas')
+            let barrage = new Barrage(canvasEle)
+            barrage.pushMessage({text: '弹幕发射，biu'})
+        </script>
+        ```
 ## Apis
 
 - `new Barrage(options)` - 构造函数，初始化
