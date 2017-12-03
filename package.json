@@ -1,11 +1,12 @@
 {
   "name": "canvas-barrage",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
-    "build": "babel src -d lib",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp build_es5",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "gulp build_es6"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,11 @@
   "homepage": "https://github.com/zhaofinger/canvas-barrage#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1"
+    "babel-preset-env": "^1.6.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-preprocess": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0"
   }
 }

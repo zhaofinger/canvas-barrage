@@ -1,15 +1,14 @@
 /**
  * @Author: zhaofinger
  * @Date: 2017-11-30 20:13:51
- * @Last Modified by: zhaoFinger
- * @Last Modified time: 2017-12-01 00:29:13
+ * @Last Modified by: zhaofinger
+ * @Last Modified time: 2017-12-03 15:48:59
  */
 
 /**
  * 弹幕发射
  * @class
  */
-
 class Barrage {
 	/**
 	 * @param {dom} canvasDom canvas dom对象
@@ -114,3 +113,7 @@ class Barrage {
 		this.msgs.map(item => null)
 	}
 }
+
+// @if env='ES6'
+export default Barrage
+// @endif

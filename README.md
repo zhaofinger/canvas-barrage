@@ -4,19 +4,51 @@
 
 [![Build Status](https://travis-ci.org/zhaofinger/canvas-barrage.svg?branch=master)](https://travis-ci.org/zhaofinger/canvas-barrage)
 
+## Build
+
+- installation dependence
+    ```bash
+    yarn // or npm install
+    ```
+
+- build for es5
+    ```bash
+    gulp build_es5
+    ```
+
+- build for es6
+    ```bash
+    gulp build_es6
+    ```
+
 ## Usage
 
-```html
-<canvas width='700' height='400'></canvas>
-<script src="../lib/index.js"></script>
-<script>
-    let canvasEle = document.querySelector('canvas')
-    let barrage = new Barrage(canvasEle)
-    barrage.pushMessage({text: '弹幕发射，biu'})
-</script>
-```
-
-## APIS
+- used in es5
+    ```html
+    <canvas width='700' height='400'></canvas>
+    <script src="../dist/index.js"></script>
+    <script>
+        let canvasEle = document.querySelector('canvas')
+        let barrage = new Barrage(canvasEle)
+        barrage.pushMessage({text: '弹幕发射，biu'})
+    </script>
+    ```
+- used in es6
+    1. install package
+        ```bash
+        yarn add canvas-barrage // or npm install canvas-barrage
+        ````
+    1. use
+    ```html
+    <canvas width='700' height='400'></canvas>
+    <script>
+        import Barrage from 'canvas-barrage'
+        let canvasEle = document.querySelector('canvas')
+        let barrage = new Barrage(canvasEle)
+        barrage.pushMessage({text: '弹幕发射，biu'})
+    </script>
+    ```
+## Apis
 
 - `new Barrage(options)` - 构造函数，初始化
 
