@@ -1,8 +1,8 @@
 # canvas-barrage
 
-基于canvas的弹幕发射器
-
 [![Build Status](https://travis-ci.org/zhaofinger/canvas-barrage.svg?branch=master)](https://travis-ci.org/zhaofinger/canvas-barrage)
+
+一个基于canvas的弹幕发射器，查看[线上demo](https://zhaofinger.github.io/canvas-barrage/index.html)
 
 ## Build
 
