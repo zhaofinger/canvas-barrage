@@ -2,7 +2,7 @@
  * @Author: zhaofinger
  * @Date: 2017-11-30 20:13:51
  * @Last Modified by: zhaofinger
- * @Last Modified time: 2017-12-03 15:48:59
+ * @Last Modified time: 2017-12-04 00:14:59
  */
 
 /**
@@ -13,7 +13,6 @@ class Barrage {
 	/**
 	 * @param {dom} canvasDom canvas dom对象
 	 * @param {number} msgStackLength 缓冲区长度，即最多弹幕数量
-	 * @param {array} colorArr 弹幕随机色彩
 	 * @param {number} quality 流畅度，通过绘制的频率来控制流畅度
 	 */
 	constructor(canvasDom, msgStackLength = 100, quality = 20) {
