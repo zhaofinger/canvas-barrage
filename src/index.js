@@ -2,7 +2,7 @@
  * @Author: zhaofinger
  * @Date: 2017-11-30 20:13:51
  * @Last Modified by: zhaofinger
- * @Last Modified time: 2017-12-04 00:14:59
+ * @Last Modified time: 2017-12-04 13:28:45
  */
 
 /**
@@ -53,33 +53,38 @@ class Barrage {
 		this.intervalId = setInterval(() => {
 			this.ctx.clearRect(0, 0, this.width, this.height)
 			this.ctx.save()
-			this.msgs.map(item => {
-				if (!item) return
-				if (!item.left && typeof item.left !== 'number') {
-					// 弹幕起始位置
-					item.left = this.width
-					// 弹幕距离top位置（除去字体高度随机）
-					item.top = item.top || this._getLimitRandom(30, this.height - 30)
-					// 弹幕移动速度
-					item.speed =  item.speed || this._getLimitRandom(2, 4)
-					// 弹幕颜色
-					item.color = item.color || this._getRandomColor()
+			let counter = 0
+			for (let i = 0; i < this.msgStackLength; i++) {
+				if (!this.msgs[i]) {
+					/* 当前项不存在弹幕 */
+					counter += 1
+					if (counter === this.msgStackLength) clearInterval(this.intervalId)
 				} else {
-					if (item.left < 0 - item.width) {
-						// 清除弹幕
-						item = null
+					/* 当前项存在弹幕 */
+					if (!this.msgs[i].left && typeof this.msgs[i].left !== 'number') {
+						/* 初始化弹幕位置颜色以及速度等 */
+						this.msgs[i].left = this.width // 弹幕起始位置
+						this.msgs[i].top = this.msgs[i].top || this._getLimitRandom(30, this.height - 30)// 弹幕距离top位置（除去字体高度随机）
+						this.msgs[i].speed =  this.msgs[i].speed || this._getLimitRandom(2, 4)// 弹幕移动速度
+						this.msgs[i].color = this.msgs[i].color || this._getRandomColor()// 弹幕颜色
 					} else {
-						// 弹幕运行绘制
-						item.left = parseInt(item.left - item.speed)
-						this.ctx.fillStyle = item.color
-						this.ctx.fillText(item.text, item.left, item.top)
-						let text = this.ctx.measureText(item.text)
-						// 文本长度
-						item.width = text.width
-						this.ctx.restore
+						/* 绘制弹幕移动 */
+						if (this.msgs[i].left < 0 - this.msgs[i].width) {
+							/* 弹幕消失，清除 */
+							this.msgs[i] = null
+						} else {
+							// 弹幕运行绘制
+							this.msgs[i].left = parseInt(this.msgs[i].left - this.msgs[i].speed)
+							this.ctx.fillStyle = this.msgs[i].color
+							this.ctx.fillText(this.msgs[i].text, this.msgs[i].left, this.msgs[i].top)
+							let text = this.ctx.measureText(this.msgs[i].text)
+							this.msgs[i].width = text.width// 文本长度
+							this.ctx.restore
+						}
 					}
 				}
-			})
+
+			}
 		}, this.quality);
 	}
 
@@ -109,7 +114,7 @@ class Barrage {
 			this.intervalId = ''
 		}
 		this.ctx.clearRect(0, 0, this.width, this.height)
-		this.msgs.map(item => null)
+		this.msgs = this.msgs.map(item => null)
 	}
 }
 

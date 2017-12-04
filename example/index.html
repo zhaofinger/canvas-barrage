@@ -38,6 +38,7 @@
 		<button class='send-primary-btn'>普通发射</button>
 		<button class='send-fast-btn'>快速发射</button>
 		<button class='send-color-btn'>发射颜色</button>
+		<button class='clear-btn'>清空</button>
 	</div>
 
 	<script src="../dist/index.min.js"></script>
@@ -56,6 +57,9 @@
 		document.querySelector('.send-color-btn').onclick = function() {
 			barrage.pushMessage({text: inputEle.value, color: '#10ae58'})
 			inputEle.value = ''
+		}
+		document.querySelector('.clear-btn').onclick = function() {
+			barrage.clear()
 		}
 	</script>
 </body>
