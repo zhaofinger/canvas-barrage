@@ -2,7 +2,7 @@
  * @Author: zhaofinger
  * @Date: 2017-11-30 20:13:51
  * @Last Modified by: zhaofinger
- * @Last Modified time: 2017-12-05 10:21:46
+ * @Last Modified time: 2017-12-05 10:40:48
  */
 
 /**
@@ -21,8 +21,9 @@ class Barrage {
 		this.height = canvasDom.height
 		this.msgs = new Array(msgStackLength)
 		this.msgStackLength = msgStackLength
-		this.intervalId = ''
 		this.quality = quality
+		this.intervalId = ''
+		this.isRunning = false
 
 		this.ctx.font = '30px "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", "sans-serif"'
 		this.ctx.shadowBlur = 2
@@ -50,7 +51,7 @@ class Barrage {
 	 * 绘制
 	 */
 	_draw() {
-		if (this.intervalId) return
+		if (this.isRunning) return
 		/* 定时器绘制弹幕 */
 		this.intervalId = setInterval(() => {
 			this.ctx.clearRect(0, 0, this.width, this.height)
@@ -60,15 +61,18 @@ class Barrage {
 				if (!this.msgs[i]) {
 					/* 当前项不存在弹幕 */
 					counter += 1
-					if (counter === this.msgStackLength) clearInterval(this.intervalId)
-					this.intervalId = ''
+					if (counter === this.msgStackLength) {
+						clearInterval(this.intervalId)
+						this.isRunning = false
+					}
 				} else {
 					/* 当前项存在弹幕 */
+					this.isRunning = true
 					if (!this.msgs[i].left && typeof this.msgs[i].left !== 'number') {
 						/* 初始化弹幕位置颜色以及速度等 */
 						this.msgs[i].left = this.width															// 弹幕起始位置
 						this.msgs[i].top = this.msgs[i].top || this._getLimitRandom(30, this.height - 30)		// 弹幕距离top位置（除去字体高度随机）
-						this.msgs[i].speed =  this.msgs[i].speed || this._getLimitRandom(2, 3)					// 弹幕移动速度
+						this.msgs[i].speed =  this.msgs[i].speed || this._getLimitRandom(2, 4)					// 弹幕移动速度
 						this.msgs[i].color = this.msgs[i].color || this._getRandomColor()						// 弹幕颜色
 					} else {
 						/* 绘制弹幕移动 */
@@ -113,9 +117,9 @@ class Barrage {
 	}
 
 	clear() {
-		if (this.intervalId) {
+		if (this.isRunning) {
 			clearInterval(this.intervalId)
-			this.intervalId = ''
+			this.isRunning = false
 		}
 		this.ctx.clearRect(0, 0, this.width, this.height)
 		this.msgs = this.msgs.map(item => null)
