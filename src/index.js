@@ -2,7 +2,7 @@
  * @Author: zhaofinger
  * @Date: 2017-11-30 20:13:51
  * @Last Modified by: zhaofinger
- * @Last Modified time: 2017-12-05 10:21:04
+ * @Last Modified time: 2017-12-05 10:21:46
  */
 
 /**
@@ -61,6 +61,7 @@ class Barrage {
 					/* 当前项不存在弹幕 */
 					counter += 1
 					if (counter === this.msgStackLength) clearInterval(this.intervalId)
+					this.intervalId = ''
 				} else {
 					/* 当前项存在弹幕 */
 					if (!this.msgs[i].left && typeof this.msgs[i].left !== 'number') {
