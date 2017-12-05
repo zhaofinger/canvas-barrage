@@ -2,7 +2,7 @@
  * @Author: zhaofinger
  * @Date: 2017-11-30 20:13:51
  * @Last Modified by: zhaofinger
- * @Last Modified time: 2017-12-04 13:28:45
+ * @Last Modified time: 2017-12-05 10:21:04
  */
 
 /**
@@ -17,13 +17,15 @@ class Barrage {
 	 */
 	constructor(canvasDom, msgStackLength = 100, quality = 20) {
 		this.ctx = canvasDom.getContext('2d')
-		this.ctx.font = '30px 微软雅黑'
 		this.width = canvasDom.width
 		this.height = canvasDom.height
 		this.msgs = new Array(msgStackLength)
 		this.msgStackLength = msgStackLength
 		this.intervalId = ''
 		this.quality = quality
+
+		this.ctx.font = '30px "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", "sans-serif"'
+		this.ctx.shadowBlur = 2
 	}
 
 	/**
@@ -63,10 +65,10 @@ class Barrage {
 					/* 当前项存在弹幕 */
 					if (!this.msgs[i].left && typeof this.msgs[i].left !== 'number') {
 						/* 初始化弹幕位置颜色以及速度等 */
-						this.msgs[i].left = this.width // 弹幕起始位置
-						this.msgs[i].top = this.msgs[i].top || this._getLimitRandom(30, this.height - 30)// 弹幕距离top位置（除去字体高度随机）
-						this.msgs[i].speed =  this.msgs[i].speed || this._getLimitRandom(2, 4)// 弹幕移动速度
-						this.msgs[i].color = this.msgs[i].color || this._getRandomColor()// 弹幕颜色
+						this.msgs[i].left = this.width															// 弹幕起始位置
+						this.msgs[i].top = this.msgs[i].top || this._getLimitRandom(30, this.height - 30)		// 弹幕距离top位置（除去字体高度随机）
+						this.msgs[i].speed =  this.msgs[i].speed || this._getLimitRandom(2, 3)					// 弹幕移动速度
+						this.msgs[i].color = this.msgs[i].color || this._getRandomColor()						// 弹幕颜色
 					} else {
 						/* 绘制弹幕移动 */
 						if (this.msgs[i].left < 0 - this.msgs[i].width) {
@@ -75,10 +77,11 @@ class Barrage {
 						} else {
 							// 弹幕运行绘制
 							this.msgs[i].left = parseInt(this.msgs[i].left - this.msgs[i].speed)
+							this.ctx.shadowColor = this.msgs[i].color
 							this.ctx.fillStyle = this.msgs[i].color
 							this.ctx.fillText(this.msgs[i].text, this.msgs[i].left, this.msgs[i].top)
 							let text = this.ctx.measureText(this.msgs[i].text)
-							this.msgs[i].width = text.width// 文本长度
+							this.msgs[i].width = text.width														// 文本长度
 							this.ctx.restore
 						}
 					}
