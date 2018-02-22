@@ -2,7 +2,7 @@
  * @Author: zhaofinger
  * @Date: 2017-11-30 20:13:51
  * @Last Modified by: zhaofinger
- * @Last Modified time: 2018-02-22 15:10:29
+ * @Last Modified time: 2018-02-22 15:54:23
  */
 
 /**
@@ -15,18 +15,16 @@ class Barrage {
 	 * @param {number} msgStackLength 缓冲区长度，即最多弹幕数量
 	 * @param {number} quality 流畅度，通过绘制的频率来控制流畅度
 	 */
-	constructor(canvasDom, msgStackLength = 100, quality = 20) {
+	constructor(canvasDom, msgStackLength = 100) {
 		this.ctx = canvasDom.getContext('2d')
 		this.width = canvasDom.width
 		this.height = canvasDom.height
 		this.msgs = new Array(msgStackLength)
 		this.msgStackLength = msgStackLength
-		this.quality = quality
+		this.quality = 1
 		this.intervalId = ''
 		this.isRunning = false
 		this.isClose = false
-
-		this.ctx.shadowBlur = 2
 
 		// 处理高分屏模糊
 		let devicePixelRatio = window.devicePixelRatio || 1
@@ -48,6 +46,9 @@ class Barrage {
 		canvasDom.style.height = oldHeight + 'px'
 
 		this.ctx.scale(ratio, ratio)
+
+		this.ctx.font = '10px "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", "sans-serif"'
+		this.ctx.shadowBlur = 4
 	}
 
 	/**
@@ -93,7 +94,7 @@ class Barrage {
 						/* 初始化弹幕位置颜色以及速度等 */
 						this.msgs[i].left = this.width // 弹幕起始位置
 						this.msgs[i].top = this.msgs[i].top || this._getLimitRandom(30, this.height - 30) // 弹幕距离top位置（除去字体高度随机）
-						this.msgs[i].speed = this.msgs[i].speed || this._getLimitRandom(2, 4) // 弹幕移动速度
+						this.msgs[i].speed = this.msgs[i].speed || this._getLimitRandom(1, 3) // 弹幕移动速度
 						this.msgs[i].color = this.msgs[i].color || this._getRandomColor() // 弹幕颜色
 					} else {
 						/* 绘制弹幕移动 */
@@ -102,7 +103,7 @@ class Barrage {
 							this.msgs[i] = null
 						} else {
 							// 弹幕运行绘制
-							this.msgs[i].left = parseInt(this.msgs[i].left - this.msgs[i].speed)
+							this.msgs[i].left = this.msgs[i].left - this.msgs[i].speed
 							this.ctx.shadowColor = this.msgs[i].color
 							this.ctx.fillStyle = this.msgs[i].color
 							// 文本放大处理模糊
@@ -115,9 +116,8 @@ class Barrage {
 						}
 					}
 				}
-
 			}
-		}, this.quality);
+		}, 10);
 	}
 
 	/**
