@@ -48,6 +48,7 @@
             barrage.pushMessage({text: '弹幕发射，biu'})
         </script>
         ```
+
 ## Apis
 
 - `new Barrage(options)` - 构造函数，初始化
