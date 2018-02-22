@@ -57,6 +57,7 @@
     | :--- | :--- |:--- | :--- | :--- |
     | 1 | `canvasDom` | `object` | `null` | 必填，`canvas` dom对象 |
     | 2 | `msgStackLength` | `number` | `300` | 最多弹幕数 |
+    | 3 | `fontSize` | `number` | `10` | 字体大小 |
 
 - `.pushMessage(options)` - 发送弹幕
 

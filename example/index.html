@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport" content="width=750, user-scalable=no, target-densitydpi=device-dpi">
 	<title>弹幕发射系统</title>
 	<style>
 		html {
@@ -46,7 +47,7 @@
 	<script src="../dist/index.min.js"></script>
 	<script>
 		let canvasEle = document.querySelector('canvas')
-		let barrage = new Barrage(canvasEle)
+		let barrage = new Barrage(canvasEle, 100, 10)
 		let inputEle = document.querySelector('.barrage-input')
 		document.querySelector('.send-primary-btn').onclick = function() {
 			barrage.pushMessage({text: inputEle.value})

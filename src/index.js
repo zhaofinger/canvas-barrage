@@ -2,7 +2,7 @@
  * @Author: zhaofinger
  * @Date: 2017-11-30 20:13:51
  * @Last Modified by: zhaofinger
- * @Last Modified time: 2018-02-22 15:54:23
+ * @Last Modified time: 2018-02-22 18:28:23
  */
 
 /**
@@ -13,15 +13,15 @@ class Barrage {
 	/**
 	 * @param {dom} canvasDom canvas dom对象
 	 * @param {number} msgStackLength 缓冲区长度，即最多弹幕数量
-	 * @param {number} quality 流畅度，通过绘制的频率来控制流畅度
+	 * @param {number} fontSize 字体大小
 	 */
-	constructor(canvasDom, msgStackLength = 100) {
+	constructor(canvasDom, msgStackLength = 100, fontSize = 10) {
 		this.ctx = canvasDom.getContext('2d')
 		this.width = canvasDom.width
 		this.height = canvasDom.height
 		this.msgs = new Array(msgStackLength)
 		this.msgStackLength = msgStackLength
-		this.quality = 1
+		this.fontSize = fontSize
 		this.intervalId = ''
 		this.isRunning = false
 		this.isClose = false
@@ -47,7 +47,7 @@ class Barrage {
 
 		this.ctx.scale(ratio, ratio)
 
-		this.ctx.font = '10px "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", "sans-serif"'
+		this.ctx.font = `${fontSize}px "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", "sans-serif"`
 		this.ctx.shadowBlur = 4
 	}
 
@@ -94,7 +94,7 @@ class Barrage {
 						/* 初始化弹幕位置颜色以及速度等 */
 						this.msgs[i].left = this.width // 弹幕起始位置
 						this.msgs[i].top = this.msgs[i].top || this._getLimitRandom(30, this.height - 30) // 弹幕距离top位置（除去字体高度随机）
-						this.msgs[i].speed = this.msgs[i].speed || this._getLimitRandom(1, 3) // 弹幕移动速度
+						this.msgs[i].speed = this.msgs[i].speed || (this._getLimitRandom(0, 2) + parseInt(this.fontSize / 10)) // 弹幕移动速度
 						this.msgs[i].color = this.msgs[i].color || this._getRandomColor() // 弹幕颜色
 					} else {
 						/* 绘制弹幕移动 */
