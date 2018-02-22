@@ -2,7 +2,7 @@
  * @Author: zhaofinger
  * @Date: 2017-11-30 20:13:51
  * @Last Modified by: zhaofinger
- * @Last Modified time: 2017-12-05 10:40:48
+ * @Last Modified time: 2018-02-22 11:28:38
  */
 
 /**
@@ -24,6 +24,7 @@ class Barrage {
 		this.quality = quality
 		this.intervalId = ''
 		this.isRunning = false
+		this.isClose = false
 
 		this.ctx.font = '30px "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", "sans-serif"'
 		this.ctx.shadowBlur = 2
@@ -101,9 +102,11 @@ class Barrage {
 	 * @param {object} msg push 的信息对象 {text: '这是一个弹幕'}
 	 */
 	pushMessage(msg) {
+		console.log(this.isClose)
+		if (this.isClose) return
 		/**
 		 * msg 可选参数
-		 * text * 弹幕文字
+		 * text 弹幕文字
 		 * speed 弹幕移动速度
 		 * color 弹幕颜色
 		 */
@@ -123,6 +126,18 @@ class Barrage {
 		}
 		this.ctx.clearRect(0, 0, this.width, this.height)
 		this.msgs = this.msgs.map(item => null)
+	}
+
+	close() {
+		if (this.isClose) return
+		this.isClose = true
+		this.clear()
+		clearInterval(this.intervalId)
+	}
+
+	open() {
+		this.isClose = false
+		this._draw()
 	}
 }
 
