@@ -57,7 +57,6 @@
     | :--- | :--- |:--- | :--- | :--- |
     | 1 | `canvasDom` | `object` | `null` | 必填，`canvas` dom对象 |
     | 2 | `msgStackLength` | `number` | `300` | 最多弹幕数 |
-    | 3 | `quality` | `number` | `20` | `canvas` 绘制频率, 每 `quality` 毫秒绘制一次，绘制频率越高越流畅同时对性能消耗也越高 |
 
 - `.pushMessage(options)` - 发送弹幕
 

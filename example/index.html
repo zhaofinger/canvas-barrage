@@ -39,6 +39,8 @@
 		<button class='send-fast-btn'>快速发射</button>
 		<button class='send-color-btn'>发射颜色</button>
 		<button class='clear-btn'>清空</button>
+		<button class='close-btn'>停止</button>
+		<button class='open-btn'>开始</button>
 	</div>
 
 	<script src="../dist/index.min.js"></script>
@@ -51,7 +53,7 @@
 			inputEle.value = ''
 		}
 		document.querySelector('.send-fast-btn').onclick = function() {
-			barrage.pushMessage({text: inputEle.value, speed: 10})
+			barrage.pushMessage({text: inputEle.value, speed: 6})
 			inputEle.value = ''
 		}
 		document.querySelector('.send-color-btn').onclick = function() {
@@ -60,6 +62,12 @@
 		}
 		document.querySelector('.clear-btn').onclick = function() {
 			barrage.clear()
+		}
+		document.querySelector('.close-btn').onclick = function() {
+			barrage.close()
+		}
+		document.querySelector('.open-btn').onclick = function() {
+			barrage.open()
 		}
 	</script>
 </body>
