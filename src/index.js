@@ -2,7 +2,7 @@
  * @Author: zhaofinger
  * @Date: 2017-11-30 20:13:51
  * @Last Modified by: zhaofinger
- * @Last Modified time: 2018-02-22 11:28:38
+ * @Last Modified time: 2018-02-22 15:10:29
  */
 
 /**
@@ -26,8 +26,28 @@ class Barrage {
 		this.isRunning = false
 		this.isClose = false
 
-		this.ctx.font = '30px "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", "sans-serif"'
 		this.ctx.shadowBlur = 2
+
+		// 处理高分屏模糊
+		let devicePixelRatio = window.devicePixelRatio || 1
+		let backingStoreRatio = this.ctx.webkitBackingStorePixelRatio ||
+			this.ctx.mozBackingStorePixelRatio ||
+			this.ctx.msBackingStorePixelRatio ||
+			this.ctx.oBackingStorePixelRatio ||
+			this.ctx.backingStorePixelRatio || 1
+		let ratio = devicePixelRatio / backingStoreRatio
+		this.ratio = ratio
+
+		let oldWidth = canvasDom.width
+		let oldHeight = canvasDom.height
+
+		canvasDom.width = oldWidth * ratio
+		canvasDom.height = oldHeight * ratio
+
+		canvasDom.style.width = oldWidth + 'px'
+		canvasDom.style.height = oldHeight + 'px'
+
+		this.ctx.scale(ratio, ratio)
 	}
 
 	/**
@@ -43,7 +63,7 @@ class Barrage {
 	 * 获取随机色
 	 */
 	_getRandomColor() {
-		const baseColor = ['00','33','66','99','cc','ff']
+		const baseColor = ['00', '33', '66', '99', 'cc', 'ff']
 		let len = baseColor.length
 		return `#${baseColor[this._getLimitRandom(0, len)]}${baseColor[this._getLimitRandom(0, len)]}${baseColor[this._getLimitRandom(0, len)]}`
 	}
@@ -71,10 +91,10 @@ class Barrage {
 					this.isRunning = true
 					if (!this.msgs[i].left && typeof this.msgs[i].left !== 'number') {
 						/* 初始化弹幕位置颜色以及速度等 */
-						this.msgs[i].left = this.width															// 弹幕起始位置
-						this.msgs[i].top = this.msgs[i].top || this._getLimitRandom(30, this.height - 30)		// 弹幕距离top位置（除去字体高度随机）
-						this.msgs[i].speed =  this.msgs[i].speed || this._getLimitRandom(2, 4)					// 弹幕移动速度
-						this.msgs[i].color = this.msgs[i].color || this._getRandomColor()						// 弹幕颜色
+						this.msgs[i].left = this.width // 弹幕起始位置
+						this.msgs[i].top = this.msgs[i].top || this._getLimitRandom(30, this.height - 30) // 弹幕距离top位置（除去字体高度随机）
+						this.msgs[i].speed = this.msgs[i].speed || this._getLimitRandom(2, 4) // 弹幕移动速度
+						this.msgs[i].color = this.msgs[i].color || this._getRandomColor() // 弹幕颜色
 					} else {
 						/* 绘制弹幕移动 */
 						if (this.msgs[i].left < 0 - this.msgs[i].width) {
@@ -85,9 +105,12 @@ class Barrage {
 							this.msgs[i].left = parseInt(this.msgs[i].left - this.msgs[i].speed)
 							this.ctx.shadowColor = this.msgs[i].color
 							this.ctx.fillStyle = this.msgs[i].color
+							// 文本放大处理模糊
+							this.ctx.font = this.ctx.font.replace(/(\d+)(px|em|rem|pt)/g, (w, m, u) => (m * this.ratio) + u)
 							this.ctx.fillText(this.msgs[i].text, this.msgs[i].left, this.msgs[i].top)
+							this.ctx.font = this.ctx.font.replace(/(\d+)(px|em|rem|pt)/g, (w, m, u) => (m / this.ratio) + u)
 							let text = this.ctx.measureText(this.msgs[i].text)
-							this.msgs[i].width = text.width														// 文本长度
+							this.msgs[i].width = text.width * this.ratio // 文本长度
 							this.ctx.restore
 						}
 					}
